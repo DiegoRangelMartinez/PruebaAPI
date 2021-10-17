@@ -18,7 +18,7 @@ namespace DL
 			modelBuilder.Entity<Country>().HasKey(x => x.Code);
 			modelBuilder.Entity<Department>().HasKey(x => x.Code);
 			modelBuilder.Entity<Department>(entity => {
-				entity.HasOne(obj => obj.Country).WithMany().OnDelete(DeleteBehavior.Cascade);
+				entity.HasOne(obj => obj.Country).WithMany().HasForeignKey(fk => fk.CountryCode).OnDelete(DeleteBehavior.Cascade);
 			});
 		}
 	}
