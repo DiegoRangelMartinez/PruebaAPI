@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using DL;
 using Microsoft.AspNetCore.Http;
+using Models;
 
 namespace API.Controllers
 {
@@ -28,5 +29,58 @@ namespace API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-    }
+        [HttpGet("SelectCountry/{code}")]
+        public async Task<IActionResult> SelectCountry(string code)
+        {
+            try
+            {
+                var item = await _iDL.SelectCountry(code);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+		[HttpPost("InsertCountry")]
+		public async Task<IActionResult> InsertCountry([FromBody] Country item)
+		{
+			try
+			{
+				await _iDL.InsertCountry(item);
+				return Ok(item);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+
+		[HttpPut("UpdateCountry/{id}")]
+		public async Task<IActionResult> UpdateCountry([FromBody] Country item)
+		{
+			try
+			{
+				await _iDL.UpdateCountry(item);
+				return Ok(item);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+		[HttpDelete("DeleteCountry/{id}")]
+		public async Task<IActionResult> DeleteCountry(string code)
+		{
+			try
+			{
+				await _iDL.DeleteCountry(code);
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+	}
 }

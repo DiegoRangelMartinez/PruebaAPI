@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DL
@@ -19,5 +16,28 @@ namespace DL
         {
 			return await _context.Countries.ToListAsync();
         }
+		public async Task<Country> SelectCountry(string code)
+        {
+			return await _context.Countries.FindAsync(code);
+        }
+		public async Task<Country> InsertCountry(Country item)
+		{
+			_context.Countries.Add(item);
+			await _context.SaveChangesAsync();
+			return item;
+		}
+		public async Task<Country> UpdateCountry(Country item)
+		{
+			_context.Entry(item).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return item;
+		}
+		public async Task<bool> DeleteCountry(string code)
+		{
+			var item = await SelectCountry(code);
+			_context.Countries.Remove(item);
+			await _context.SaveChangesAsync();
+			return true;
+		}
 	}
 }
