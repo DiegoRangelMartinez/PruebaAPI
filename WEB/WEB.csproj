@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -21,6 +21,34 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\countries\countries.component.ts" />
+    <None Remove="ClientApp\src\app\countries\country.component.ts" />
+    <None Remove="ClientApp\src\app\departments\department.component.ts" />
+    <None Remove="ClientApp\src\app\departments\departments.component.ts" />
+    <None Remove="ClientApp\src\app\shared\models\country.ts" />
+    <None Remove="ClientApp\src\app\shared\models\department.ts" />
+    <None Remove="ClientApp\src\app\shared\services\country.service.ts" />
+    <None Remove="ClientApp\src\app\shared\services\department.service.ts" />
+    <None Remove="ClientApp\src\app\shared\utilities\globalUtilities.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\countries\countries.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\countries\country.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\departments\department.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\departments\departments.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\country.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\department.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\services\country.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\services\department.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\utilities\globalUtilities.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
