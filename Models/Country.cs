@@ -13,8 +13,5 @@ namespace Models
         public string Name { get; set; }
         [Required, MaxLength(3)]
         public string NumericCode { get; set; }
-        public bool IsIndependent { get; set; }
-        public List<Department> Departments { get; set; }
-
     }
 }

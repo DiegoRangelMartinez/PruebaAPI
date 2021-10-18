@@ -13,9 +13,9 @@ namespace DL
 		{
 			_context = context;
 		}
-		public async Task<List<Department>> SelectDepartmentsByCountryCode(string CountryCode)
+		public async Task<List<Department>> SelectDepartmentsByCountryCode(string countryCode)
 		{
-			return await _context.Departments.Where(x => x.CountryCode == CountryCode).ToListAsync();
+			return await _context.Departments.Where(x => x.CountryCode == countryCode).ToListAsync();
 		}
 		public async Task<Department> SelectDepartment(string code)
 		{

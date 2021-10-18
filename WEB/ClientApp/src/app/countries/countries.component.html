@@ -1,0 +1,29 @@
+<h1 id="tableLabel">Países</h1>
+<p *ngIf="countries.length == 0"><em>Cargando...</em></p>
+<div>
+  <button class="btn btn-primary btnInsert" (click)="onclickInsertCountry()">Agregar país</button>
+</div>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="countries.length > 0">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Alpha 2</th>
+      <th>Alpha 3</th>
+      <th>Numérico</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <td>{{country.name}}</td>
+      <td style="width: 100px">{{country.code}}</td>
+      <td style="width: 100px">{{country.alphaCodeThree}}</td>
+      <td style="width: 100px">{{country.numericCode}}</td>
+      <td style="width: 300px">
+        <button class="btn btn-primary btnGrid" (click)="onclickViewDeparments(country.code)">Ver detalle</button>
+        <button class="btn btn-secondary btnGrid" (click)="onclickUpdateCountry(country.code)">Editar</button>
+        <button class="btn btn-danger btnGrid" (click)="onclickDeleteCountry(country.code)">Borrar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
