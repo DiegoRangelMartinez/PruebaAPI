@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DL;
 using Microsoft.AspNetCore.Http;
 using Models;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -21,7 +22,7 @@ namespace API.Controllers
         {
             try
             {
-                var items = await _iDL.SelectCountries();
+                List<Country> items = await _iDL.SelectCountries();
                 return Ok(items);
             }
             catch (Exception ex)
@@ -34,11 +35,24 @@ namespace API.Controllers
         {
             try
             {
-                var item = await _iDL.SelectCountry(code);
+                Country item = await _iDL.SelectCountry(code);
                 return Ok(item);
             }
             catch (Exception ex)
             {
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+		[HttpPost("ValidateKeys")]
+		public async Task<IActionResult> ValidateKeys([FromBody] Country country)
+		{
+			try
+			{
+				Dictionary<string, bool> item = await _iDL.ValidateKeys(country);
+				return Ok(item);
+			}
+			catch (Exception ex)
+			{
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}

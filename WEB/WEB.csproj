@@ -29,7 +29,9 @@
     <None Remove="ClientApp\src\app\departments\department.component.ts" />
     <None Remove="ClientApp\src\app\departments\departments.component.ts" />
     <None Remove="ClientApp\src\app\shared\models\country.ts" />
+    <None Remove="ClientApp\src\app\shared\models\CountryValidateForm.ts" />
     <None Remove="ClientApp\src\app\shared\models\department.ts" />
+    <None Remove="ClientApp\src\app\shared\models\departmentValidateForm.ts" />
     <None Remove="ClientApp\src\app\shared\services\country.service.ts" />
     <None Remove="ClientApp\src\app\shared\services\department.service.ts" />
     <None Remove="ClientApp\src\app\shared\utilities\globalUtilities.ts" />
@@ -45,7 +47,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\country.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\countryValidateForm.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\department.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\departmentValidateForm.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\country.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\department.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\utilities\globalUtilities.ts" />

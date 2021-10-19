@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../shared/models/country';
+import { CountryValidateForm } from '../shared/models/CountryValidateForm';
 import { CountryService } from '../shared/services/country.service';
 
 @Component({
@@ -27,9 +28,9 @@ export class CountryComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid)
-      return;
+      return alert('Verifique el formulario');
     if (!this.form.dirty)
-      return;
+      return alert('Realice algún cambio');
     const mergedItem = { ...this.country, ...this.form.value };
     if (!this.country)
       this.insertCountry(mergedItem);
@@ -45,12 +46,12 @@ export class CountryComponent implements OnInit {
   insertCountry(item: Country) {
     this.countryService.insertCountry(item).subscribe(
       (data) => { this.insertCountryComplete() },
-      (error) => { alert('Ha ocurrido un erorr al agregar el país.'); });
+      (error) => { alert('Ha ocurrido un error al agregar el país.'); });
   }
   updateCountry(item: Country) {
     this.countryService.updateCountry(item).subscribe(
       () => { this.updateCountryComplete() },
-      (error) => { alert('Ha ocurrido un erorr al editar el país.'); });
+      (error) => { alert('Ha ocurrido un error al editar el país.'); });
   }
 
   createForm() {
@@ -105,5 +106,28 @@ export class CountryComponent implements OnInit {
   saveCountryComplete() {
     alert('Procesado con exito.');
     this.router.navigate(['']);
+  }
+  validateKeysAsync() {
+    const mergedItem = { ...this.country, ...this.form.value };
+    this.validateKeys(mergedItem);
+  }
+  validateKeys(country: Country) {
+    this.countryService.validateKeys(country).subscribe(
+      (data) => { this.validateKeysComplete(data) },
+      (error) => { alert('Ha ocurrido un error al verificar los datos del país.'); });
+  }
+  validateKeysComplete(item: CountryValidateForm) {
+    let message = "";
+    if (item.isAlphaCodeThreeValid && item.isCodeValid && item.isNumericCodeValid) {
+      this.onSubmit();
+      return;
+    }
+    if (!item.isAlphaCodeThreeValid)
+      message += "Alpha 3 ya existe\n";
+    if (!item.isCodeValid)
+      message += "Alpha 2 ya existe\n";
+    if (!item.isNumericCodeValid)
+      message += "Código Numérico\n";
+    alert(message);
   }
 }

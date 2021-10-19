@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../shared/models/country';
 import { Department } from '../shared/models/department';
+import { DepartmentValidateForm } from '../shared/models/departmentValidateForm';
 import { CountryService } from '../shared/services/country.service';
 import { DepartmentService } from '../shared/services/department.service';
 
@@ -32,9 +33,9 @@ export class DepartmentComponent implements OnInit {
   onSubmit() {
     const countryCode = this.querystringParams.countryCode;
     if (!this.form.valid)
-      return;
+      return alert('Verifique el formulario');
     if (!this.form.dirty)
-      return;
+      return alert('Realice algún cambio');
     const mergedItem = { ...this.department, ...this.form.value };
     mergedItem.countryCode = countryCode;
     if (!this.department)
@@ -56,12 +57,12 @@ export class DepartmentComponent implements OnInit {
   insertDepartment(item: Department) {
     this.departmentService.insertDepartment(item).subscribe(
       (data) => { this.insertDepartmentComplete() },
-      (error) => { alert('Ha ocurrido un erorr al agregar el país.'); });
+      (error) => { alert('Ha ocurrido un error al agregar el país.'); });
   }
   updateDepartment(item: Department) {
     this.departmentService.updateDepartment(item).subscribe(
       () => { this.updateDepartmentComplete() },
-      (error) => { alert('Ha ocurrido un erorr al editar el país.'); });
+      (error) => { alert('Ha ocurrido un error al editar el país.'); });
   }
 
   createForm() {
@@ -122,5 +123,26 @@ export class DepartmentComponent implements OnInit {
   saveDepartmentComplete() {
     alert('Procesado con exito.');
     this.router.navigate(['country', this.querystringParams.countryCode]);
+  }
+  validateKeysAsync() {
+    const countryCode = this.querystringParams.countryCode;
+    const mergedItem = { ...this.department, ...this.form.value };
+    mergedItem.countryCode = countryCode;
+    this.validateKeys(mergedItem);
+  }
+  validateKeys(department: Department) {
+    this.departmentService.validateKeys(department).subscribe(
+      (data) => { this.validateKeysComplete(data) },
+      (error) => { alert('Ha ocurrido un error al verificar los datos del departamento.'); });
+  }
+  validateKeysComplete(item: DepartmentValidateForm) {
+    let message = "";
+    if (item.isCodeValid) {
+      this.onSubmit();
+      return;
+    }
+    if (!item.isCodeValid)
+      message += "Código ya existe";
+    alert(message);
   }
 }

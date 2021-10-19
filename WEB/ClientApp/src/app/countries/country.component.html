@@ -1,16 +1,40 @@
 <h1 id="tableLabel">{{title}}</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="validateKeysAsync()">
   <div class="form-group">
     <input type="text" formControlName="name" class="form-control" placeholder="Nombre">
+    <div class="errorForm" *ngIf="form.get('name').errors?.required">
+      Este campo es requerido
+    </div>
+    <div class="errorForm" *ngIf="form.get('name').errors?.maxlength">
+      Cantidad de caracteres excedida (75)
+    </div>
   </div>
   <div class="form-group">
     <input type="text" formControlName="code" class="form-control" placeholder="Alpha 2">
+    <div class="errorForm" *ngIf="form.get('code').errors?.required">
+      Este campo es requerido
+    </div>
+    <div class="errorForm" *ngIf="form.get('code').errors?.maxlength">
+      Cantidad de caracteres excedida (2)
+    </div>
   </div>
   <div class="form-group">
     <input type="text" formControlName="alphaCodeThree" class="form-control" placeholder="Alpha 3">
+    <div class="errorForm" *ngIf="form.get('alphaCodeThree').errors?.required">
+      Este campo es requerido
+    </div>
+    <div class="errorForm" *ngIf="form.get('alphaCodeThree').errors?.maxlength">
+      Cantidad de caracteres excedida (3)
+    </div>
   </div>
   <div class="form-group">
     <input type="text" formControlName="numericCode" class="form-control" placeholder="Código numérico">
+    <div class="errorForm" *ngIf="form.get('numericCode').errors?.required">
+      Este campo es requerido
+    </div>
+    <div class="errorForm" *ngIf="form.get('numericCode').errors?.maxlength">
+      Cantidad de caracteres excedida (3)
+    </div>
   </div>
   <button type="submit" class="btn btn-primary btnGrid">Guardar</button>
   <button type="button" class="btn btn-danger" [routerLink]="['']">Cancelar</button>

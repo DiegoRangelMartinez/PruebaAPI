@@ -11,5 +11,6 @@ namespace DL
 		Task<Country> InsertCountry(Country item);
 		Task<Country> UpdateCountry(Country item);
 		Task<bool> DeleteCountry(string code);
+		Task<Dictionary<string, bool>> ValidateKeys(Country item);
 	}
 }
