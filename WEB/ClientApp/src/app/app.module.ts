@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CountriesComponent } from './countries/countries.component';
 import { GlobalUtilities } from './shared/utilities/globalUtilities';
 import { CountryComponent } from './countries/country.component';
@@ -19,8 +17,6 @@ import { DepartmentComponent } from './departments/department.component';
     AppComponent,
     NavMenuComponent,
     CountriesComponent,
-    CounterComponent,
-    FetchDataComponent,
     CountryComponent,
     DepartmentsComponent,
     DepartmentComponent
@@ -32,8 +28,6 @@ import { DepartmentComponent } from './departments/department.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: CountriesComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'country/:code', component: CountryComponent },
       { path: 'departments/:countryCode', component: DepartmentsComponent },
       { path: 'department/:code/:countryCode', component: DepartmentComponent },
