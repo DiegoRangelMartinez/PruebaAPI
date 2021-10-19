@@ -70,7 +70,7 @@ namespace API.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
-		[HttpDelete("DeleteDepartment/{id}")]
+		[HttpDelete("DeleteDepartment/{code}")]
 		public async Task<IActionResult> DeleteDepartment(string code)
 		{
 			try

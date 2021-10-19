@@ -44,7 +44,7 @@ namespace DL
 		{
 			Dictionary<string, bool> item = new();
 			Department departmentCode = await _context.Departments.Where(x => x.Code == department.Code).FirstOrDefaultAsync();
-			item.Add("IsCodeValid", department == null);
+			item.Add("IsCodeValid", departmentCode == null);
 			return item;
 		}
 	}

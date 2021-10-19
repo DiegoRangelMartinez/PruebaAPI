@@ -43,19 +43,6 @@ namespace API.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
-		[HttpPost("ValidateKeys")]
-		public async Task<IActionResult> ValidateKeys([FromBody] Country country)
-		{
-			try
-			{
-				Dictionary<string, bool> item = await _iDL.ValidateKeys(country);
-				return Ok(item);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-			}
-		}
 		[HttpPost("InsertCountry")]
 		public async Task<IActionResult> InsertCountry([FromBody] Country item)
 		{
@@ -83,13 +70,26 @@ namespace API.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
-		[HttpDelete("DeleteCountry/{id}")]
+		[HttpDelete("DeleteCountry/{code}")]
 		public async Task<IActionResult> DeleteCountry(string code)
 		{
 			try
 			{
 				await _iDL.DeleteCountry(code);
 				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+		[HttpPost("ValidateKeys")]
+		public async Task<IActionResult> ValidateKeys([FromBody] Country country)
+		{
+			try
+			{
+				Dictionary<string, bool> item = await _iDL.ValidateKeys(country);
+				return Ok(item);
 			}
 			catch (Exception ex)
 			{

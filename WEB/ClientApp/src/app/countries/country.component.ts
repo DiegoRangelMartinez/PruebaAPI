@@ -32,10 +32,11 @@ export class CountryComponent implements OnInit {
     if (!this.form.dirty)
       return alert('Realice algún cambio');
     const mergedItem = { ...this.country, ...this.form.value };
-    if (!this.country)
+    if (!this.country) {
       this.insertCountry(mergedItem);
-    else
-      this.updateCountry(mergedItem);
+      return;
+    }
+    this.updateCountry(mergedItem);
   }
 
   selectCountry(code: string) {
@@ -118,16 +119,21 @@ export class CountryComponent implements OnInit {
   }
   validateKeysComplete(item: CountryValidateForm) {
     let message = "";
-    if (item.isAlphaCodeThreeValid && item.isCodeValid && item.isNumericCodeValid) {
+    let isEdit = this.country != null;
+    let alphaCodeThree = this.form.get('alphaCodeThree').value;
+    let numericCode = this.form.get('numericCode').value;
+    let isAlphaCodeThreeValid = this.country != null && this.country.alphaCodeThree == alphaCodeThree && isEdit;
+    let isNumericCodeValid = this.country != null && this.country.numericCode == numericCode && isEdit;
+    if (item.IsAlphaCodeThreeValid && (item.IsCodeValid || isEdit) && item.IsNumericCodeValid) {
       this.onSubmit();
       return;
     }
-    if (!item.isAlphaCodeThreeValid)
+    if (!item.IsAlphaCodeThreeValid && !isAlphaCodeThreeValid)
       message += "Alpha 3 ya existe\n";
-    if (!item.isCodeValid)
+    if (!item.IsCodeValid && !isEdit)
       message += "Alpha 2 ya existe\n";
-    if (!item.isNumericCodeValid)
-      message += "Código Numérico\n";
+    if (!item.IsNumericCodeValid && !isNumericCodeValid)
+      message += "Código Numérico ya existe\n";
     alert(message);
   }
 }

@@ -38,10 +38,11 @@ export class DepartmentComponent implements OnInit {
       return alert('Realice algún cambio');
     const mergedItem = { ...this.department, ...this.form.value };
     mergedItem.countryCode = countryCode;
-    if (!this.department)
+    if (!this.department) {
       this.insertDepartment(mergedItem);
-    else
-      this.updateDepartment(mergedItem);
+      return;
+    }
+    this.updateDepartment(mergedItem);
   }
 
   selectCountry(code: string) {
@@ -122,13 +123,18 @@ export class DepartmentComponent implements OnInit {
   }
   saveDepartmentComplete() {
     alert('Procesado con exito.');
-    this.router.navigate(['country', this.querystringParams.countryCode]);
+    this.router.navigate(['departments', this.querystringParams.countryCode]);
   }
   validateKeysAsync() {
     const countryCode = this.querystringParams.countryCode;
     const mergedItem = { ...this.department, ...this.form.value };
     mergedItem.countryCode = countryCode;
-    this.validateKeys(mergedItem);
+    const isEdit = this.department != null;
+    if (!isEdit) {
+      this.validateKeys(mergedItem);
+      return;
+    }
+    this.onSubmit();
   }
   validateKeys(department: Department) {
     this.departmentService.validateKeys(department).subscribe(
@@ -137,11 +143,11 @@ export class DepartmentComponent implements OnInit {
   }
   validateKeysComplete(item: DepartmentValidateForm) {
     let message = "";
-    if (item.isCodeValid) {
+    if (item.IsCodeValid) {
       this.onSubmit();
       return;
     }
-    if (!item.isCodeValid)
+    if (!item.IsCodeValid)
       message += "Código ya existe";
     alert(message);
   }
