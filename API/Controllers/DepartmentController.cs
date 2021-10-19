@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -21,7 +22,7 @@ namespace API.Controllers
 		{
 			try
 			{
-				var items = await _iDL.SelectDepartmentsByCountryCode(countryCode);
+				List<Department> items = await _iDL.SelectDepartmentsByCountryCode(countryCode);
 				return Ok(items);
 			}
 			catch (Exception ex)
@@ -34,7 +35,7 @@ namespace API.Controllers
 		{
 			try
 			{
-				var item = await _iDL.SelectDepartment(code);
+				Department item = await _iDL.SelectDepartment(code);
 				return Ok(item);
 			}
 			catch (Exception ex)
@@ -69,13 +70,27 @@ namespace API.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
-		[HttpDelete("DeleteDepartment/{id}")]
+		[HttpDelete("DeleteDepartment/{code}")]
 		public async Task<IActionResult> DeleteDepartment(string code)
 		{
 			try
 			{
 				await _iDL.DeleteDepartment(code);
 				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+
+		[HttpPost("ValidateKeys")]
+		public async Task<IActionResult> ValidateKeys([FromBody] Department department)
+		{
+			try
+			{
+				Dictionary<string, bool> item = await _iDL.ValidateKeys(department);
+				return Ok(item);
 			}
 			catch (Exception ex)
 			{

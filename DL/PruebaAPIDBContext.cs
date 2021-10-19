@@ -12,10 +12,9 @@ namespace DL
 		public virtual DbSet<Department> Departments { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				optionsBuilder.UseSqlServer("Server=DIEGO-PC\\SQLEXPRESS;Database=PruebaAPI;Persist Security Info=True;Integrated Security=SSPI;");
-			}
+			if (optionsBuilder.IsConfigured)
+				return;
+			optionsBuilder.UseSqlServer("Server=DIEGO-PC\\SQLEXPRESS;Database=PruebaAPI;Persist Security Info=True;Integrated Security=SSPI;");
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

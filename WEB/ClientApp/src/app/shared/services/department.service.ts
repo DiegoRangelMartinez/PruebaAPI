@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { GlobalUtilities } from '../utilities/globalUtilities';
 import { Observable } from 'rxjs';
 import { Department } from '../models/department';
+import { DepartmentValidateForm } from '../models/departmentValidateForm';
 
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {
@@ -28,5 +29,8 @@ export class DepartmentService {
   }
   deleteDepartment(code: string) {
     return this.httpClient.delete(`${this.apiUrl}/DeleteDepartment/${code}`, { headers: this.headers });
+  }
+  validateKeys(department: Department): Observable<DepartmentValidateForm> {
+    return this.httpClient.post<DepartmentValidateForm>(`${this.apiUrl}/ValidateKeys/`, department, { headers: this.headers });
   }
 }

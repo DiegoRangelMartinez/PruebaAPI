@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { GlobalUtilities } from '../utilities/globalUtilities';
 import { Observable } from 'rxjs';
 import { Country } from '../models/country';
+import { CountryValidateForm } from '../models/CountryValidateForm';
 
 @Injectable({ providedIn: 'root' })
 export class CountryService {
@@ -28,5 +29,8 @@ export class CountryService {
   }
   deleteCountry(code: string) {
     return this.httpClient.delete(`${this.apiUrl}/DeleteCountry/${code}`, { headers: this.headers });
+  }
+  validateKeys(country: Country): Observable<CountryValidateForm> {
+    return this.httpClient.post<CountryValidateForm>(`${this.apiUrl}/ValidateKeys/`, country, { headers: this.headers });
   }
 }

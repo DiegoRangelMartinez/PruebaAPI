@@ -11,5 +11,6 @@ namespace DL
 		Task<Department> InsertDepartment(Department item);
 		Task<Department> UpdateDepartment(Department item);
 		Task<bool> DeleteDepartment(string code);
+		Task<Dictionary<string, bool>> ValidateKeys(Department item);
 	}
 }

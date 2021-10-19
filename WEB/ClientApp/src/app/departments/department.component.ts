@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country } from '../shared/models/country';
 import { Department } from '../shared/models/department';
+import { DepartmentValidateForm } from '../shared/models/departmentValidateForm';
 import { CountryService } from '../shared/services/country.service';
 import { DepartmentService } from '../shared/services/department.service';
 
@@ -32,15 +33,16 @@ export class DepartmentComponent implements OnInit {
   onSubmit() {
     const countryCode = this.querystringParams.countryCode;
     if (!this.form.valid)
-      return;
+      return alert('Verifique el formulario');
     if (!this.form.dirty)
-      return;
+      return alert('Realice algún cambio');
     const mergedItem = { ...this.department, ...this.form.value };
     mergedItem.countryCode = countryCode;
-    if (!this.department)
+    if (!this.department) {
       this.insertDepartment(mergedItem);
-    else
-      this.updateDepartment(mergedItem);
+      return;
+    }
+    this.updateDepartment(mergedItem);
   }
 
   selectCountry(code: string) {
@@ -56,12 +58,12 @@ export class DepartmentComponent implements OnInit {
   insertDepartment(item: Department) {
     this.departmentService.insertDepartment(item).subscribe(
       (data) => { this.insertDepartmentComplete() },
-      (error) => { alert('Ha ocurrido un erorr al agregar el país.'); });
+      (error) => { alert('Ha ocurrido un error al agregar el país.'); });
   }
   updateDepartment(item: Department) {
     this.departmentService.updateDepartment(item).subscribe(
       () => { this.updateDepartmentComplete() },
-      (error) => { alert('Ha ocurrido un erorr al editar el país.'); });
+      (error) => { alert('Ha ocurrido un error al editar el país.'); });
   }
 
   createForm() {
@@ -121,6 +123,32 @@ export class DepartmentComponent implements OnInit {
   }
   saveDepartmentComplete() {
     alert('Procesado con exito.');
-    this.router.navigate(['country', this.querystringParams.countryCode]);
+    this.router.navigate(['departments', this.querystringParams.countryCode]);
+  }
+  validateKeysAsync() {
+    const countryCode = this.querystringParams.countryCode;
+    const mergedItem = { ...this.department, ...this.form.value };
+    mergedItem.countryCode = countryCode;
+    const isEdit = this.department != null;
+    if (!isEdit) {
+      this.validateKeys(mergedItem);
+      return;
+    }
+    this.onSubmit();
+  }
+  validateKeys(department: Department) {
+    this.departmentService.validateKeys(department).subscribe(
+      (data) => { this.validateKeysComplete(data) },
+      (error) => { alert('Ha ocurrido un error al verificar los datos del departamento.'); });
+  }
+  validateKeysComplete(item: DepartmentValidateForm) {
+    let message = "";
+    if (item.IsCodeValid) {
+      this.onSubmit();
+      return;
+    }
+    if (!item.IsCodeValid)
+      message += "Código ya existe";
+    alert(message);
   }
 }

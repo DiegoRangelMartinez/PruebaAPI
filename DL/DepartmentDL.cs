@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DL
 {
-    public class DepartmentDL : IDepartmentDL
-    {
+	public class DepartmentDL : IDepartmentDL
+	{
 		private readonly PruebaAPIDBContext _context;
 		public DepartmentDL(PruebaAPIDBContext context)
 		{
@@ -35,10 +35,17 @@ namespace DL
 		}
 		public async Task<bool> DeleteDepartment(string code)
 		{
-			var item = await SelectDepartment(code);
+			Department item = await SelectDepartment(code);
 			_context.Departments.Remove(item);
 			await _context.SaveChangesAsync();
 			return true;
+		}
+		public async Task<Dictionary<string, bool>> ValidateKeys(Department department)
+		{
+			Dictionary<string, bool> item = new();
+			Department departmentCode = await _context.Departments.Where(x => x.Code == department.Code).FirstOrDefaultAsync();
+			item.Add("IsCodeValid", departmentCode == null);
+			return item;
 		}
 	}
 }
