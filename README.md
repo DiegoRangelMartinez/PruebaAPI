@@ -1,4 +1,7 @@
 # PruebaAPI
+All code is in english
+<br>
+<br>
 Solución hecha en Visual Studio
 <br>
 <br>
